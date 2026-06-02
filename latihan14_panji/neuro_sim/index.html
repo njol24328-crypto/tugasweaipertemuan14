@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulator Neuroevolusi Interaktif</title>
+    <meta name="description" content="Simulator web neuroevolusi interaktif yang melatih agen menggunakan Jaringan Saraf Tiruan dan Algoritma Genetika.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-fx"></div>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>NEURO<span>EVO</span></h1>
+                <p>Jaringan Saraf Tiruan & Algoritma Genetika</p>
+            </div>
+            <div class="toolbar">
+                <button id="btn-target-move" class="btn-secondary tooltip" data-tooltip="Buat target bergerak otomatis">Target Bergerak: OFF</button>
+                <button id="btn-maze" class="btn-secondary tooltip" data-tooltip="Muat tantangan level labirin bawaan">Labirin: Kosong</button>
+                <button id="btn-mutation" class="btn-secondary tooltip" data-tooltip="Ubah tingkat mutasi (keacakan) saat regenerasi">Mutasi: 15%</button>
+                
+                <div class="spacer" style="flex:1"></div>
+                
+                <button id="btn-clear-walls" class="btn-secondary tooltip" data-tooltip="Hapus semua rintangan custom">Hapus Rintangan</button>
+                <button id="btn-reset" class="btn-secondary tooltip" data-tooltip="Mulai ulang dari Gen 1">Reset Evolusi</button>
+                <button id="btn-speed" class="btn-primary tooltip" data-tooltip="Percepat waktu simulasi">Kecepatan: 1x</button>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="sim-panel panel">
+                <div class="canvas-container sim-container" id="sim-container">
+                    <canvas id="sim-canvas"></canvas>
+                    
+                    <div class="instructions">
+                        <div class="inst-item"><span class="color-dot pink"></span> Gambar rintangan dengan Mouse</div>
+                        <div class="inst-item"><span class="color-dot cyan"></span> Drag Target Biru Muda</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="side-panel panel">
+                <!-- Navigasi Tabs -->
+                <div class="panel-nav">
+                    <button class="tab-btn active" data-tab="stats">Dashboard</button>
+                    <button class="tab-btn" data-tab="brain">Visualisasi AI</button>
+                    <button class="tab-btn" data-tab="graph">Grafik Tren</button>
+                </div>
+                
+                <div class="panel-body">
+                    <!-- Tab 1: Statistik & Manajemen -->
+                    <div class="tab-pane active" id="tab-stats">
+                        <div class="stats-header">
+                            <div class="live-dot"></div>
+                            <h3>LIVE STATS</h3>
+                        </div>
+                        <div class="hud-grid">
+                            <div class="hud-stat-box">
+                                <span>Waktu</span>
+                                <div id="hud-time" class="val">0/800</div>
+                            </div>
+                            <div class="hud-stat-box">
+                                <span>Generasi</span>
+                                <div id="hud-gen" class="val text-primary">1</div>
+                            </div>
+                            <div class="hud-stat-box">
+                                <span>Populasi</span>
+                                <div id="hud-pop" class="val">150</div>
+                            </div>
+                            <div class="hud-stat-box">
+                                <span>Sukses</span>
+                                <div id="hud-success" class="val text-cyan">0</div>
+                            </div>
+                            <div class="hud-stat-box highlight">
+                                <span>Fit (Gen)</span>
+                                <div id="hud-max-fit" class="val">0</div>
+                            </div>
+                            <div class="hud-stat-box highlight">
+                                <span>Fit (Top)</span>
+                                <div id="hud-alltime-fit" class="val text-gold">0</div>
+                            </div>
+                        </div>
+
+                        <hr class="divider">
+
+                        <h4 class="section-title">Manajemen AI & Ekstra</h4>
+                        <div class="ai-controls">
+                            <button id="btn-save" class="btn-secondary tooltip" data-tooltip="Simpan otak terbaik saat ini ke Browser">Simpan AI</button>
+                            <button id="btn-load" class="btn-secondary tooltip" data-tooltip="Muat otak yang disimpan & terapakan ke Populasi">Muat AI</button>
+                            <button id="btn-kill" class="btn-kill tooltip" data-tooltip="Hancurkan 50% agen berkinerja buruk seketika!">Culling (Eksekusi 50%)</button>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Visualisasi JST -->
+                    <div class="tab-pane" id="tab-brain">
+                        <div class="panel-header">
+                            <h3>Otak Agen Terbaik (JST)</h3>
+                        </div>
+                        <div class="canvas-container inner-canvas">
+                            <canvas id="nn-canvas"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Tab 3: Grafik -->
+                    <div class="tab-pane" id="tab-graph">
+                        <div class="panel-header">
+                            <h3>Tren Kebugaran (Fitness)</h3>
+                        </div>
+                        <div class="canvas-container inner-canvas">
+                            <canvas id="graph-canvas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
